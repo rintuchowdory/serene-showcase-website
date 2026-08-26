@@ -23,7 +23,7 @@ export default function Home() {
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663652274342/cYqfSxDq3hhqr6GCtGhUZi/serene_lotus_accent-TDLDzDUn8X3hbKZAic6ZVg.webp"
+              src={`${import.meta.env.BASE_URL}serene-lotus.svg`}
               alt="Serene"
               className="w-8 h-8"
             />
@@ -71,7 +71,7 @@ export default function Home() {
             {/* Hero Image */}
             <div className="relative h-96 rounded-2xl overflow-hidden shadow-lg">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663652274342/cYqfSxDq3hhqr6GCtGhUZi/serene_hero_bg-9NH6LU7y3GsJkrDFVHAzEu.webp"
+                src={`${import.meta.env.BASE_URL}serene-hero.svg`}
                 alt="Serene Hero"
                 className="w-full h-full object-cover"
                 style={{
@@ -87,7 +87,7 @@ export default function Home() {
 
       {/* Wave Divider */}
       <div className="w-full h-32 bg-cover bg-center" style={{
-        backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310519663652274342/cYqfSxDq3hhqr6GCtGhUZi/serene_wave_divider-Ln4yErdb6ZCLpGZXXMtmLG.webp')",
+        backgroundImage: `url('${import.meta.env.BASE_URL}serene-wave.svg')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }} />
@@ -110,17 +110,17 @@ export default function Home() {
                 {
                   title: "Home Screen",
                   description: "Personalized greeting with daily meditation and quick categories",
-                  image: "/serene_home_screen.png",
+                  image: `${import.meta.env.BASE_URL}serene-home.svg`,
                 },
                 {
                   title: "Player Screen",
                   description: "Immersive meditation experience with progress visualization",
-                  image: "/serene_player_screen.png",
+                  image: `${import.meta.env.BASE_URL}serene-player.svg`,
                 },
                 {
                   title: "Profile Screen",
                   description: "Track your progress and meditation history",
-                  image: "/serene_profile_screen.png",
+                  image: `${import.meta.env.BASE_URL}serene-profile.svg`,
                 },
               ].map((screen, idx) => (
                 <div
@@ -152,17 +152,17 @@ export default function Home() {
                 {
                   title: "Explore Screen",
                   description: "Discover meditations by category and search",
-                  image: "/serene_explore_screen.png",
+                  image: `${import.meta.env.BASE_URL}serene-explore.svg`,
                 },
                 {
                   title: "Sleep Screen",
                   description: "Dark mode interface for bedtime relaxation",
-                  image: "/serene_sleep_screen.png",
+                  image: `${import.meta.env.BASE_URL}serene-sleep.svg`,
                 },
                 {
                   title: "Completion Screen",
                   description: "Celebrate progress and track your streak",
-                  image: "/serene_completion_screen.png",
+                  image: `${import.meta.env.BASE_URL}serene-completion.svg`,
                 },
               ].map((screen, idx) => (
                 <div
@@ -199,7 +199,7 @@ export default function Home() {
           </div>
           <div className="relative rounded-xl overflow-hidden shadow-lg bg-card">
             <img
-              src="/serene_user_flow.png"
+              src={`${import.meta.env.BASE_URL}serene-flow.svg`}
               alt="User Flow"
               className="w-full h-auto"
             />
