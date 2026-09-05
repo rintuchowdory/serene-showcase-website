@@ -84,6 +84,27 @@ const principles = [
   },
 ];
 
+const inspirations = [
+  {
+    quote: "You do not have to rush the becoming.",
+    label: "For slow mornings",
+    image:
+      "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1400&q=85",
+  },
+  {
+    quote: "Small steps still move you forward.",
+    label: "For the in-between",
+    image:
+      "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=85",
+  },
+  {
+    quote: "Breathe in what is. Let go of what was.",
+    label: "For winding down",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=85",
+  },
+];
+
 function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
@@ -307,6 +328,40 @@ export default function Home() {
                   <p>Ease into sleep with soundscapes that know when to fade.</p>
                 </div>
               </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="inspiration-section section-space">
+          <div className="container">
+            <div className="section-intro inspiration-intro">
+              <div>
+                <div className="eyebrow"><span className="eyebrow-dot" /> A little something to carry</div>
+                <h2>Keep a kind thought<br /><em>close by.</em></h2>
+              </div>
+              <p>
+                Beautiful reminders for the moments when you need permission to pause, begin
+                again, or simply take the next small step.
+              </p>
+            </div>
+
+            <div className="inspiration-grid">
+              {inspirations.map((item, index) => (
+                <article className="inspiration-card" key={item.quote}>
+                  <img
+                    src={item.image}
+                    alt={item.quote}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="inspiration-shade" />
+                  <div className="inspiration-card-content">
+                    <span className="inspiration-number">0{index + 1}</span>
+                    <p>{item.quote}</p>
+                    <span className="inspiration-label">{item.label}</span>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>

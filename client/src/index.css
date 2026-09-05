@@ -658,6 +658,100 @@ h2 em {
   color: var(--ink);
 }
 
+.inspiration-section {
+  background: #f7f6f1;
+  padding-top: 35px;
+}
+
+.inspiration-intro {
+  align-items: end;
+  display: grid;
+  gap: 80px;
+  grid-template-columns: 1fr 0.65fr;
+}
+
+.inspiration-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 65px;
+}
+
+.inspiration-card {
+  aspect-ratio: 0.78;
+  background: #cdd8c8;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+.inspiration-card::after {
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  content: "";
+  inset: 13px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.inspiration-card img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  width: 100%;
+}
+
+.inspiration-card:hover img {
+  transform: scale(1.06);
+}
+
+.inspiration-shade {
+  background: linear-gradient(180deg, rgba(18, 31, 25, 0.02) 28%, rgba(15, 31, 23, 0.76) 100%);
+  inset: 0;
+  position: absolute;
+}
+
+.inspiration-card:nth-child(2) .inspiration-shade {
+  background: linear-gradient(180deg, rgba(68, 53, 32, 0.02) 24%, rgba(48, 39, 27, 0.74) 100%);
+}
+
+.inspiration-card:nth-child(3) .inspiration-shade {
+  background: linear-gradient(180deg, rgba(28, 73, 83, 0.03) 24%, rgba(14, 46, 53, 0.74) 100%);
+}
+
+.inspiration-card-content {
+  bottom: 28px;
+  left: 29px;
+  position: absolute;
+  right: 29px;
+  z-index: 2;
+}
+
+.inspiration-number,
+.inspiration-label {
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inspiration-number {
+  color: #dbe8d5;
+}
+
+.inspiration-card-content p {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(24px, 2.45vw, 34px);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin: 14px 0 18px;
+  max-width: 245px;
+}
+
+.inspiration-label {
+  color: rgba(244, 247, 237, 0.73);
+}
+
 .screens-section {
   background: #edf0e9;
 }
@@ -1228,6 +1322,30 @@ h2 em {
   .ritual-grid {
     display: block;
     margin-top: 48px;
+  }
+
+  .inspiration-section {
+    padding-top: 0;
+  }
+
+  .inspiration-intro {
+    display: block;
+  }
+
+  .inspiration-grid {
+    display: flex;
+    gap: 12px;
+    margin-top: 45px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .inspiration-card {
+    aspect-ratio: 0.78;
+    flex: 0 0 78vw;
+    max-width: 310px;
+    scroll-snap-align: start;
   }
 
   .ritual-card {
