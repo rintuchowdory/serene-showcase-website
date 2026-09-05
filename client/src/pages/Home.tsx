@@ -1,329 +1,456 @@
-import { Button } from "@/components/ui/button";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Check,
+  ChevronRight,
+  Clock3,
+  Leaf,
+  Menu,
+  Moon,
+  Pause,
+  Play,
+  Sparkles,
+  SunMedium,
+  Wind,
+  X,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
-/**
- * Serene App Design Showcase
- * A minimalist landing page presenting the Serene meditation app design
- * Design: Contemporary minimalism with organic, nature-inspired elements
- */
+type Screen = {
+  title: string;
+  eyebrow: string;
+  description: string;
+  image: string;
+  duration: string;
+  color: string;
+};
+
+const base = import.meta.env.BASE_URL;
+
+const screens: Screen[] = [
+  {
+    title: "Your daily ritual",
+    eyebrow: "Home screen",
+    description:
+      "A gentle starting point that turns one quiet minute into a habit worth keeping.",
+    image: `${base}serene-home.svg`,
+    duration: "5–20 min",
+    color: "sage",
+  },
+  {
+    title: "Find your focus",
+    eyebrow: "Explore screen",
+    description:
+      "Browse small practices for busy mornings, deep work, and the space between.",
+    image: `${base}serene-explore.svg`,
+    duration: "12 sessions",
+    color: "mist",
+  },
+  {
+    title: "Settle into sleep",
+    eyebrow: "Sleep screen",
+    description:
+      "A softer, darker room for easing out of the day without another bright screen.",
+    image: `${base}serene-sleep.svg`,
+    duration: "8–30 min",
+    color: "night",
+  },
+];
+
+const principles = [
+  {
+    number: "01",
+    title: "Make it feel easy",
+    description: "Less friction means more room for the practice itself.",
+    Icon: Check,
+  },
+  {
+    number: "02",
+    title: "Respect attention",
+    description: "No streak anxiety. No noisy notifications. Just a gentle nudge.",
+    Icon: Leaf,
+  },
+  {
+    number: "03",
+    title: "Let nature in",
+    description: "Warm colors and organic movement give the interface room to breathe.",
+    Icon: Wind,
+  },
+  {
+    number: "04",
+    title: "Celebrate quietly",
+    description: "Progress is worth noticing, without turning calm into a competition.",
+    Icon: Sparkles,
+  },
+];
+
+function scrollToId(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeScreen, setActiveScreen] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(max > 0 ? (window.scrollY / max) * 100 : 0);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const selectedScreen = screens[activeScreen];
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <img
-              src={`${import.meta.env.BASE_URL}serene-lotus.svg`}
-              alt="Serene"
-              className="w-8 h-8"
-            />
-            <span className="text-xl font-semibold text-foreground">Serene</span>
-          </div>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#design" className="text-sm hover:text-primary transition-colors">
-              Design
-            </a>
-            <a href="#screens" className="text-sm hover:text-primary transition-colors">
-              Screens
-            </a>
-            <a href="#philosophy" className="text-sm hover:text-primary transition-colors">
+    <div className="serene-site min-h-screen overflow-x-hidden bg-[#f7f6f1] text-[#1f2b26]">
+      <div
+        className="reading-progress"
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+        aria-hidden="true"
+      />
+
+      <header className="serene-header">
+        <nav className="container flex h-[76px] items-center justify-between" aria-label="Primary navigation">
+          <button
+            type="button"
+            className="brand-mark"
+            onClick={() => scrollToId("top")}
+            aria-label="Back to top"
+          >
+            <span className="brand-icon">
+              <img src={`${base}serene-lotus.svg`} alt="" />
+            </span>
+            <span>serene</span>
+          </button>
+
+          <div className="hidden items-center gap-8 md:flex">
+            <button type="button" onClick={() => scrollToId("story")} className="nav-link">
+              The ritual
+            </button>
+            <button type="button" onClick={() => scrollToId("screens")} className="nav-link">
+              Inside Serene
+            </button>
+            <button type="button" onClick={() => scrollToId("principles")} className="nav-link">
               Philosophy
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/rintuchowdory/serene-showcase-website"
+              target="_blank"
+              rel="noreferrer"
+              className="nav-cta hidden sm:inline-flex"
+            >
+              Open repository <ArrowUpRight size={15} />
             </a>
+            <button
+              type="button"
+              className="menu-button md:hidden"
+              onClick={() => setIsMenuOpen((open) => !open)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Text Content */}
-            <div className="space-y-6">
-              <div className="inline-block px-4 py-2 bg-secondary rounded-full">
-                <span className="text-sm font-medium text-primary">Meditation App Design</span>
-              </div>
-              <h1 className="text-foreground">
-                Find Your Inner Peace with <span className="text-primary">Serene</span>
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                A minimalist meditation app designed with calm, intention, and elegance. Explore the thoughtful UI/UX that transforms your mindfulness journey.
-              </p>
-              <div className="flex gap-4 pt-4">
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  View Design System
-                </Button>
-                <Button variant="outline" className="border-border">
-                  GitHub Repository
-                </Button>
-              </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-lg">
-              <img
-                src={`${import.meta.env.BASE_URL}serene-hero.svg`}
-                alt="Serene Hero"
-                className="w-full h-full object-cover"
-                style={{
-                  transform: `translateY(${scrollY * 0.3}px)`,
-                  transition: "transform 0.1s ease-out",
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Wave Divider */}
-      <div className="w-full h-32 bg-cover bg-center" style={{
-        backgroundImage: `url('${import.meta.env.BASE_URL}serene-wave.svg')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }} />
-
-      {/* Screens Gallery Section */}
-      <section id="screens" className="py-20 bg-secondary/30">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-foreground mb-4">App Screens</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Experience the complete user journey through carefully crafted interface designs that prioritize simplicity and elegance.
-            </p>
-          </div>
-
-          {/* Core Screens */}
-          <div className="mb-20">
-            <h3 className="text-foreground mb-8 text-center">Core Experience</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Home Screen",
-                  description: "Personalized greeting with daily meditation and quick categories",
-                  image: `${import.meta.env.BASE_URL}serene-home.svg`,
-                },
-                {
-                  title: "Player Screen",
-                  description: "Immersive meditation experience with progress visualization",
-                  image: `${import.meta.env.BASE_URL}serene-player.svg`,
-                },
-                {
-                  title: "Profile Screen",
-                  description: "Track your progress and meditation history",
-                  image: `${import.meta.env.BASE_URL}serene-profile.svg`,
-                },
-              ].map((screen, idx) => (
-                <div
-                  key={idx}
-                  className="group cursor-pointer"
-                  style={{
-                    animation: `fadeInUp 0.6s ease-out ${idx * 0.1}s both`,
-                  }}
-                >
-                  <div className="relative h-96 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-card">
-                    <img
-                      src={screen.image}
-                      alt={screen.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <h3 className="mt-4 text-foreground font-semibold">{screen.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-2">{screen.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Additional Screens */}
-          <div>
-            <h3 className="text-foreground mb-8 text-center">Additional Features</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Explore Screen",
-                  description: "Discover meditations by category and search",
-                  image: `${import.meta.env.BASE_URL}serene-explore.svg`,
-                },
-                {
-                  title: "Sleep Screen",
-                  description: "Dark mode interface for bedtime relaxation",
-                  image: `${import.meta.env.BASE_URL}serene-sleep.svg`,
-                },
-                {
-                  title: "Completion Screen",
-                  description: "Celebrate progress and track your streak",
-                  image: `${import.meta.env.BASE_URL}serene-completion.svg`,
-                },
-              ].map((screen, idx) => (
-                <div
-                  key={idx}
-                  className="group cursor-pointer"
-                  style={{
-                    animation: `fadeInUp 0.6s ease-out ${(idx + 3) * 0.1}s both`,
-                  }}
-                >
-                  <div className="relative h-96 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-card">
-                    <img
-                      src={screen.image}
-                      alt={screen.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <h3 className="mt-4 text-foreground font-semibold">{screen.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-2">{screen.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* User Flow Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-foreground mb-4">User Flow</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              A streamlined journey from app launch to meditation, designed for minimal friction and maximum focus.
-            </p>
-          </div>
-          <div className="relative rounded-xl overflow-hidden shadow-lg bg-card">
-            <img
-              src={`${import.meta.env.BASE_URL}serene-flow.svg`}
-              alt="User Flow"
-              className="w-full h-auto"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Design Philosophy Section */}
-      <section id="philosophy" className="py-20 bg-secondary/30">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-foreground mb-4">Design Philosophy</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Every design decision reflects our commitment to creating a sanctuary from digital clutter.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {isMenuOpen && (
+          <div className="mobile-menu md:hidden">
             {[
-              {
-                title: "Calmness",
-                description: "Soft sage green and warm cream tones evoke nature and tranquility, creating a peaceful visual sanctuary.",
-                icon: "🧘",
-              },
-              {
-                title: "Simplicity",
-                description: "Minimalist UI components and generous whitespace reduce cognitive load, allowing focus on meditation.",
-                icon: "✨",
-              },
-              {
-                title: "Elegance",
-                description: "A sophisticated blend of serif titles and modern sans-serif body text creates timeless beauty.",
-                icon: "💎",
-              },
-              {
-                title: "Nature Integration",
-                description: "Organic flows, natural imagery, and earth tones connect users to the natural world within the app.",
-                icon: "🌿",
-              },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors duration-300"
-                style={{
-                  animation: `fadeInUp 0.6s ease-out ${idx * 0.1}s both`,
+              ["The ritual", "story"],
+              ["Inside Serene", "screens"],
+              ["Philosophy", "principles"],
+            ].map(([label, id]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  scrollToId(id);
                 }}
               >
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-foreground font-semibold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
-              </div>
+                {label}
+                <ChevronRight size={16} />
+              </button>
             ))}
           </div>
-        </div>
-      </section>
+        )}
+      </header>
 
-      {/* Color Palette Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-foreground mb-4">Color Palette</h2>
-            <p className="text-muted-foreground">
-              Carefully selected colors that evoke calm and sophistication
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {[
-              { name: "Sage Green", hex: "#B2AC88" },
-              { name: "Warm Cream", hex: "#F5F5DC" },
-              { name: "Charcoal", hex: "#2C2C2C" },
-              { name: "Soft Gold", hex: "#D4AF8C" },
-              { name: "Muted Gray", hex: "#E8E8DC" },
-            ].map((color, idx) => (
-              <div key={idx} className="text-center">
-                <div
-                  className="w-full h-24 rounded-lg shadow-md mb-3 border border-border"
-                  style={{ backgroundColor: color.hex }}
-                />
-                <p className="font-semibold text-foreground text-sm">{color.name}</p>
-                <p className="text-xs text-muted-foreground">{color.hex}</p>
+      <main id="top">
+        <section className="hero-section">
+          <div className="hero-orb hero-orb-one" aria-hidden="true" />
+          <div className="hero-orb hero-orb-two" aria-hidden="true" />
+          <div className="container hero-grid">
+            <div className="hero-copy">
+              <div className="eyebrow eyebrow-light">
+                <span className="eyebrow-dot" />
+                A calmer way to come back to yourself
               </div>
-            ))}
+              <h1>
+                Make room
+                <br />
+                <em>for a little quiet.</em>
+              </h1>
+              <p className="hero-description">
+                Serene is a meditation space designed around real life: a breath between
+                meetings, a reset before bed, and five unrushed minutes that belong only to you.
+              </p>
+              <div className="hero-actions">
+                <button type="button" className="button button-light" onClick={() => scrollToId("screens")}>
+                  Explore the experience <ArrowDown size={16} />
+                </button>
+                <button type="button" className="text-button" onClick={() => scrollToId("story")}>
+                  See how it flows <ChevronRight size={16} />
+                </button>
+              </div>
+              <div className="hero-note">
+                <div className="avatar-stack" aria-hidden="true">
+                  <span>J</span>
+                  <span>M</span>
+                  <span>A</span>
+                </div>
+                <span>Made for the moments in between.</span>
+              </div>
+            </div>
+
+            <div className="hero-visual">
+              <div className="hero-image-frame">
+                <img src={`${base}serene-hero.svg`} alt="A calm morning landscape from Serene" />
+                <div className="image-fade" />
+                <div className="hero-image-label">
+                  <span>01</span>
+                  <span>Begin gently</span>
+                </div>
+              </div>
+              <div className="floating-session-card">
+                <div className="session-card-top">
+                  <span className="session-icon"><Leaf size={17} /></span>
+                  <span className="live-pill"><span /> ready when you are</span>
+                </div>
+                <p>Morning clarity</p>
+                <div className="session-meta"><Clock3 size={14} /> 08 min <span>•</span> guided by Mira</div>
+                <button
+                  type="button"
+                  className="session-play"
+                  onClick={() => setIsPlaying((playing) => !playing)}
+                  aria-label={isPlaying ? "Pause morning clarity" : "Play morning clarity"}
+                >
+                  {isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" />}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+          <div className="hero-bottom-line container">
+            <span>Scroll to wander through the experience</span>
+            <span className="line" />
+            <span>↓</span>
+          </div>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container text-center">
-          <h2 className="text-primary-foreground mb-6">Ready to Explore?</h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
-            Visit the GitHub repository to see the complete design system and all assets.
-          </p>
-          <Button className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-            View on GitHub
-          </Button>
-        </div>
-      </section>
+        <section id="story" className="story-section section-space">
+          <div className="container">
+            <div className="section-intro split-intro">
+              <div>
+                <div className="eyebrow"><span className="eyebrow-dot" /> Designed for real days</div>
+                <h2>Not a new routine.<br /><em>A softer rhythm.</em></h2>
+              </div>
+              <p>
+                The best meditation app is the one that meets you where you are. Serene shapes
+                itself around the small windows you already have, making calm feel close instead
+                of complicated.
+              </p>
+            </div>
 
-      {/* Footer */}
-      <footer className="border-t border-border bg-background">
-        <div className="container py-12">
-          <div className="text-center text-muted-foreground">
-            <p className="mb-2">Serene App Design Showcase</p>
-            <p className="text-sm">
-              Designed with intention. Built with care.
+            <div className="ritual-grid">
+              <article className="ritual-card ritual-card-large">
+                <div className="ritual-card-art morning-art">
+                  <SunMedium size={34} strokeWidth={1.2} />
+                  <span className="art-caption">07:42</span>
+                </div>
+                <div className="ritual-card-content">
+                  <span className="card-kicker">01 — Morning</span>
+                  <h3>Start with space</h3>
+                  <p>Trade the first scroll of the day for a clearer first thought.</p>
+                  <button type="button" className="arrow-link" onClick={() => { setActiveScreen(0); scrollToId("screens"); }}>
+                    See the home screen <ArrowUpRight size={15} />
+                  </button>
+                </div>
+              </article>
+              <article className="ritual-card">
+                <div className="ritual-card-art afternoon-art">
+                  <Wind size={32} strokeWidth={1.2} />
+                  <span className="art-caption">14:16</span>
+                </div>
+                <div className="ritual-card-content">
+                  <span className="card-kicker">02 — Afternoon</span>
+                  <h3>Find your center</h3>
+                  <p>A two-minute reset for when the day gets loud.</p>
+                </div>
+              </article>
+              <article className="ritual-card">
+                <div className="ritual-card-art evening-art">
+                  <Moon size={32} strokeWidth={1.2} />
+                  <span className="art-caption">22:31</span>
+                </div>
+                <div className="ritual-card-content">
+                  <span className="card-kicker">03 — Evening</span>
+                  <h3>Let the day go</h3>
+                  <p>Ease into sleep with soundscapes that know when to fade.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="screens" className="screens-section section-space">
+          <div className="container">
+            <div className="section-intro screens-intro">
+              <div>
+                <div className="eyebrow"><span className="eyebrow-dot" /> A closer look</div>
+                <h2>Quietly considered,<br /><em>down to the detail.</em></h2>
+              </div>
+              <p>
+                Every screen is an invitation, not an interruption. Tap through a few of the
+                spaces that make Serene feel like somewhere you want to return to.
+              </p>
+            </div>
+
+            <div className="screen-tabs" role="tablist" aria-label="Serene screens">
+              {screens.map((screen, index) => (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeScreen === index}
+                  key={screen.title}
+                  className={activeScreen === index ? "screen-tab active" : "screen-tab"}
+                  onClick={() => setActiveScreen(index)}
+                >
+                  <span>0{index + 1}</span>
+                  {screen.title}
+                </button>
+              ))}
+            </div>
+
+            <div className={`screen-feature screen-${selectedScreen.color}`}>
+              <div className="screen-feature-copy">
+                <span className="card-kicker">{selectedScreen.eyebrow}</span>
+                <h3>{selectedScreen.title}</h3>
+                <p>{selectedScreen.description}</p>
+                <div className="screen-feature-meta">
+                  <span><Clock3 size={14} /> {selectedScreen.duration}</span>
+                  <span><Sparkles size={14} /> gentle by design</span>
+                </div>
+                <button type="button" className="button button-dark" onClick={() => setIsViewerOpen(true)}>
+                  View full screen <ArrowUpRight size={16} />
+                </button>
+              </div>
+              <button
+                type="button"
+                className="device-stage"
+                onClick={() => setIsViewerOpen(true)}
+                aria-label={`View ${selectedScreen.title} full screen`}
+              >
+                <div className="device-glow" />
+                <div className="device-frame">
+                  <div className="device-notch" />
+                  <img src={selectedScreen.image} alt={`${selectedScreen.eyebrow} preview`} />
+                </div>
+              </button>
+              <div className="feature-index">0{activeScreen + 1}<span> / 03</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="flow-section section-space">
+          <div className="container">
+            <div className="flow-panel">
+              <div className="flow-copy">
+                <div className="eyebrow eyebrow-light"><span className="eyebrow-dot" /> One beautiful path</div>
+                <h2>Less searching.<br /><em>More arriving.</em></h2>
+                <p>
+                  From the first hello to the last exhale, Serene keeps the path simple so your
+                  attention can stay where it matters.
+                </p>
+                <div className="flow-stat"><strong>01</strong><span /> Choose a moment that feels like yours</div>
+                <div className="flow-stat"><strong>02</strong><span /> Press play and let the noise soften</div>
+                <div className="flow-stat"><strong>03</strong><span /> Leave feeling a little more here</div>
+              </div>
+              <div className="flow-art">
+                <img src={`${base}serene-flow.svg`} alt="Serene meditation user flow" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="principles" className="principles-section section-space">
+          <div className="container">
+            <div className="section-intro centered-intro">
+              <div className="eyebrow"><span className="eyebrow-dot" /> The thinking behind it</div>
+              <h2>Softness is a feature.</h2>
+              <p>Four small principles keep the experience grounded, useful, and unmistakably human.</p>
+            </div>
+            <div className="principles-grid">
+              {principles.map(({ number, title, description, Icon }) => (
+                <article className="principle-item" key={number}>
+                  <div className="principle-number">{number}</div>
+                  <div className="principle-icon"><Icon size={18} strokeWidth={1.5} /></div>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="closing-section">
+          <div className="container closing-inner">
+            <div className="closing-mark"><img src={`${base}serene-lotus.svg`} alt="" /></div>
+            <p className="eyebrow eyebrow-light">Your next quiet moment is close</p>
+            <h2>Come back to yourself.</h2>
+            <p className="closing-copy">
+              Serene is a meditation app concept built with care, clarity, and a little more
+              breathing room than the average screen.
             </p>
+            <a
+              href="https://github.com/rintuchowdory/serene-showcase-website"
+              target="_blank"
+              rel="noreferrer"
+              className="button button-light"
+            >
+              Explore the repository <ArrowUpRight size={16} />
+            </a>
           </div>
+        </section>
+      </main>
+
+      <footer className="serene-footer">
+        <div className="container flex flex-col items-start justify-between gap-4 py-7 sm:flex-row sm:items-center">
+          <div className="brand-mark"><span className="brand-icon"><img src={`${base}serene-lotus.svg`} alt="" /></span><span>serene</span></div>
+          <p>Designed with intention. Built with care. <span>© 2026</span></p>
         </div>
       </footer>
 
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+      {isViewerOpen && (
+        <div className="viewer-backdrop" role="dialog" aria-modal="true" aria-label={selectedScreen.title}>
+          <button type="button" className="viewer-close" onClick={() => setIsViewerOpen(false)} aria-label="Close preview">
+            <X size={22} />
+          </button>
+          <div className="viewer-content">
+            <span className="card-kicker">{selectedScreen.eyebrow}</span>
+            <h2>{selectedScreen.title}</h2>
+            <img src={selectedScreen.image} alt={`${selectedScreen.title} full screen`} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
