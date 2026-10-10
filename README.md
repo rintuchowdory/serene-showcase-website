@@ -1,3 +1,9 @@
+# Serene — Showcase Website
+
+Live: **https://rintuchowdory.github.io/serene-showcase-website/** — the showcase site for the Serene meditation app, including an interactive one-minute breathing demo (`client/src/components/BreathWidget.tsx`, 4-4-6-2 cycle with an optional soft chime).
+
+---
+
 # Web App Template (Static Frontend)
 
 Pure React 19 + Tailwind 4 template with shadcn/ui baked in. **Use this README as the checklist for shipping static experiences.**

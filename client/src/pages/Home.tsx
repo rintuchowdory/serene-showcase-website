@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import BreathWidget from "@/components/BreathWidget";
 
 type Screen = {
   title: string;
@@ -160,6 +161,9 @@ export default function Home() {
             <button type="button" onClick={() => scrollToId("principles")} className="nav-link">
               Philosophy
             </button>
+            <button type="button" onClick={() => scrollToId("breathe")} className="nav-link">
+              Breathe
+            </button>
           </div>
 
           <div className="flex items-center gap-3">
@@ -189,6 +193,7 @@ export default function Home() {
               ["The ritual", "story"],
               ["Inside Serene", "screens"],
               ["Philosophy", "principles"],
+              ["Breathe", "breathe"],
             ].map(([label, id]) => (
               <button
                 key={id}
@@ -363,6 +368,22 @@ export default function Home() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section id="breathe" className="breathe-section">
+          <div className="container breathe-grid">
+            <div className="section-intro split-intro">
+              <div>
+                <div className="eyebrow"><span className="eyebrow-dot" /> Try it right here</div>
+                <h2>Take one quiet<br /><em>breath with us.</em></h2>
+              </div>
+              <p>
+                Reading about calm is one thing. Here is a real minute of it — the same gentle
+                pacing Serene uses in its guided sessions. Four in, four held, six out, two of rest.
+              </p>
+            </div>
+            <BreathWidget />
           </div>
         </section>
 
