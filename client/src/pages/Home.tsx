@@ -56,6 +56,33 @@ const screens: Screen[] = [
     duration: "8–30 min",
     color: "night",
   },
+  {
+    title: "Stay with the session",
+    eyebrow: "Player screen",
+    description:
+      "One quiet canvas for the session itself — a slow wave, the time remaining, nothing else asking for you.",
+    image: `${base}serene-player.svg`,
+    duration: "Live sessions",
+    color: "dusk",
+  },
+  {
+    title: "See your quiet streak",
+    eyebrow: "Profile screen",
+    description:
+      "A gentle record of the minutes you gave yourself, counted kindly instead of competitively.",
+    image: `${base}serene-profile.svg`,
+    duration: "Your history",
+    color: "clay",
+  },
+  {
+    title: "Finish softly",
+    eyebrow: "Completion screen",
+    description:
+      "No confetti, no leaderboard. Just a small note of completion and a doorway back into your day.",
+    image: `${base}serene-completion.svg`,
+    duration: "Every session",
+    color: "sage",
+  },
 ];
 
 const principles = [
@@ -395,7 +422,7 @@ export default function Home() {
                 <h2>Quietly considered,<br /><em>down to the detail.</em></h2>
               </div>
               <p>
-                Every screen is an invitation, not an interruption. Tap through a few of the
+                Every screen is an invitation, not an interruption. Tap through the six
                 spaces that make Serene feel like somewhere you want to return to.
               </p>
             </div>
@@ -441,7 +468,7 @@ export default function Home() {
                   <img src={selectedScreen.image} alt={`${selectedScreen.eyebrow} preview`} />
                 </div>
               </button>
-              <div className="feature-index">0{activeScreen + 1}<span> / 03</span></div>
+              <div className="feature-index">0{activeScreen + 1}<span> / 0{screens.length}</span></div>
             </div>
           </div>
         </section>

@@ -1567,3 +1567,11 @@ h2 em {
   border-color: rgba(31, 43, 38, 0.3);
   color: #1f2b26;
 }
+
+.screen-dusk {
+  background: linear-gradient(125deg, #d8d3e0 0%, #bcb4cd 100%);
+}
+
+.screen-clay {
+  background: linear-gradient(125deg, #e9dcc9 0%, #d6bfa4 100%);
+}
