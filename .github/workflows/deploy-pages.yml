@@ -31,4 +31,12 @@ jobs:
           git add -A
           git diff --cached --quiet && exit 0
           git commit -m 'ci: publish generated frontend [skip ci]'
-          git push origin HEAD:main
+          # The publish step pushes build output back to main, so it has to
+          # rebase onto whatever landed in the meantime - otherwise the push is
+          # rejected with 'fetch first' and the site keeps the old build.
+          for attempt in 1 2 3; do
+            git push origin HEAD:main && exit 0
+            git pull --rebase --autostash origin main
+          done
+          echo 'publishing the build failed after 3 attempts' >&2
+          exit 1
