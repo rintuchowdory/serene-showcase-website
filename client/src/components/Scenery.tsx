@@ -115,8 +115,8 @@ export function SceneryLandscape({ parallax = true }: { parallax?: boolean }) {
             <stop offset="1" stopColor="#f6dfb8" stopOpacity="0" />
           </radialGradient>
           <linearGradient id="sc-lake" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#c6d3c2" />
-            <stop offset="1" stopColor="#a8bba6" />
+            <stop offset="0" stopColor="#cbd8c6" />
+            <stop offset="1" stopColor="#b2c4ac" />
           </linearGradient>
           <filter id="sc-blur" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="18" />
@@ -143,7 +143,7 @@ export function SceneryLandscape({ parallax = true }: { parallax?: boolean }) {
           <path d="M0 396 L150 340 L280 390 L420 330 L560 398 L700 346 L840 402 L980 352 L1120 404 L1260 350 L1400 400 L1600 360 L1600 560 L0 560 Z" fill="#b3c4ad" />
         </g>
         <g className="scenery-near">
-          <path d="M0 470 L160 424 L320 466 L470 418 L620 470 L780 430 L930 474 L1090 428 L1250 472 L1410 432 L1600 470 L1600 560 L0 560 Z" fill="#93a98f" />
+          <path d="M0 470 L160 424 L320 466 L470 418 L620 470 L780 430 L930 474 L1090 428 L1250 472 L1410 432 L1600 470 L1600 560 L0 560 Z" fill="#7f9783" />
         </g>
 
         <rect y="486" width="1600" height="74" fill="url(#sc-lake)" />
