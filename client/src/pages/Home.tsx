@@ -312,7 +312,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="scenery-section" aria-label="A quiet landscape">
+        <section id="scene" className="scenery-section" aria-label="A quiet landscape">
           <SceneryLandscape />
           <div className="scenery-caption">
             <div className="container scenery-caption-inner">
