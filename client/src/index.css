@@ -1575,3 +1575,177 @@ h2 em {
 .screen-clay {
   background: linear-gradient(125deg, #e9dcc9 0%, #d6bfa4 100%);
 }
+
+/* ------------------------------------------------------------------
+   Scenery & picture motion
+   Slow, low-amplitude movement only: the page is meant to feel calm.
+   Every effect is switched off for prefers-reduced-motion.
+   ------------------------------------------------------------------ */
+
+.scenery {
+  --scenery-shift: 0px;
+  position: relative;
+  width: 100%;
+  height: clamp(240px, 42vw, 460px);
+  overflow: hidden;
+  background: #e8ecdf;
+}
+
+.scenery-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: translateY(var(--scenery-shift));
+  will-change: transform;
+}
+
+.scenery-far { animation: sc-rise 26s ease-in-out infinite alternate; }
+.scenery-mid { animation: sc-rise 22s ease-in-out infinite alternate-reverse; }
+
+@keyframes sc-rise {
+  from { transform: translateY(4px); }
+  to { transform: translateY(-4px); }
+}
+
+.scenery-sun { animation: sc-breathe 14s ease-in-out infinite; transform-origin: 1120px 170px; }
+@keyframes sc-breathe {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+.sc-cloud { animation: sc-drift 90s linear infinite; }
+.sc-cloud-b { animation-duration: 120s; animation-direction: reverse; }
+.sc-cloud-c { animation-duration: 150s; }
+@keyframes sc-drift {
+  from { transform: translateX(-60px); }
+  to { transform: translateX(60px); }
+}
+
+.sc-mist { animation: sc-mist-drift 60s ease-in-out infinite alternate; }
+.sc-mist-b { animation-duration: 84s; animation-direction: alternate-reverse; }
+@keyframes sc-mist-drift {
+  from { transform: translateX(-70px); }
+  to { transform: translateX(70px); }
+}
+
+.scenery-reflection { animation: sc-shimmer 9s ease-in-out infinite; }
+@keyframes sc-shimmer {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.6; }
+}
+
+.sc-mote { animation: sc-mote-float 18s ease-in-out infinite; }
+.sc-mote-b { animation-duration: 24s; animation-delay: -4s; }
+.sc-mote-c { animation-duration: 21s; animation-delay: -9s; }
+.sc-mote-d { animation-duration: 27s; animation-delay: -14s; }
+@keyframes sc-mote-float {
+  0% { transform: translate(0, 0); opacity: 0.2; }
+  40% { opacity: 0.9; }
+  100% { transform: translate(14px, -46px); opacity: 0.15; }
+}
+
+/* Picture frames: a still image that keeps breathing */
+.pb-kenburns {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.pb-kenburns-inner {
+  height: 100%;
+  width: 100%;
+  animation-name: pb-kenburns;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: 52% 56%;
+  will-change: transform;
+}
+
+.pb-kenburns img {
+  height: 100%;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Same drift for an element that has no wrapper of its own */
+.pb-motion {
+  animation-name: pb-kenburns;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 30s;
+  transform-origin: 52% 56%;
+  will-change: transform;
+}
+
+@keyframes pb-kenburns {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to { transform: scale(1.1) translate3d(-1.4%, -1.6%, 0); }
+}
+
+/* The new landscape moment between hero and story */
+.scenery-section {
+  position: relative;
+  background: #e8ecdf;
+}
+
+.scenery-caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0 0 clamp(18px, 4vw, 40px);
+  pointer-events: none;
+}
+
+.scenery-caption-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.scenery-quote {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.25rem, 2.6vw, 2rem);
+  line-height: 1.25;
+  color: #1f2b26;
+  max-width: 22ch;
+  margin: 0;
+}
+
+.scenery-quote em {
+  font-style: italic;
+  color: #4c5f52;
+}
+
+.scenery-note {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5c6d60;
+}
+
+@media (max-width: 640px) {
+  .scenery-caption { position: static; padding: 18px 0 26px; }
+  .scenery { height: 300px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scenery-svg,
+  .scenery-far,
+  .scenery-mid,
+  .scenery-sun,
+  .sc-cloud,
+  .sc-mist,
+  .scenery-reflection,
+  .sc-mote,
+  .pb-kenburns-inner,
+  .pb-motion {
+    animation: none !important;
+    transform: none !important;
+  }
+}

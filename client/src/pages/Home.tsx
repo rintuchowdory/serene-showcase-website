@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import BreathWidget from "@/components/BreathWidget";
+import { KenBurns, Reveal, SceneryLandscape } from "@/components/Scenery";
 
 type Screen = {
   title: string;
@@ -277,7 +278,9 @@ export default function Home() {
 
             <div className="hero-visual">
               <div className="hero-image-frame">
-                <img src={`${base}serene-hero.svg`} alt="A calm morning landscape from Serene" />
+                <KenBurns duration={34}>
+                  <img src={`${base}serene-hero.svg`} alt="A calm morning landscape from Serene" />
+                </KenBurns>
                 <div className="image-fade" />
                 <div className="hero-image-label">
                   <span>01</span>
@@ -306,6 +309,22 @@ export default function Home() {
             <span>Scroll to wander through the experience</span>
             <span className="line" />
             <span>↓</span>
+          </div>
+        </section>
+
+        <section className="scenery-section" aria-label="A quiet landscape">
+          <SceneryLandscape />
+          <div className="scenery-caption">
+            <div className="container scenery-caption-inner">
+              <Reveal>
+                <p className="scenery-quote">
+                  Somewhere between one breath and the next, <em>the day softens.</em>
+                </p>
+              </Reveal>
+              <Reveal delay={0.15}>
+                <span className="scenery-note">Dawn over still water · Serene</span>
+              </Reveal>
+            </div>
           </div>
         </section>
 
@@ -385,6 +404,8 @@ export default function Home() {
                     alt={item.quote}
                     loading="lazy"
                     referrerPolicy="no-referrer"
+                    className="pb-motion"
+                    style={{ animationDelay: `${index * -1.6}s`, animationDuration: `${26 + index}s` }}
                   />
                   <div className="inspiration-shade" />
                   <div className="inspiration-card-content">
@@ -416,6 +437,7 @@ export default function Home() {
 
         <section id="screens" className="screens-section section-space">
           <div className="container">
+            <Reveal>
             <div className="section-intro screens-intro">
               <div>
                 <div className="eyebrow"><span className="eyebrow-dot" /> A closer look</div>
@@ -426,6 +448,7 @@ export default function Home() {
                 spaces that make Serene feel like somewhere you want to return to.
               </p>
             </div>
+            </Reveal>
 
             <div className="screen-tabs" role="tablist" aria-label="Serene screens">
               {screens.map((screen, index) => (
@@ -465,7 +488,11 @@ export default function Home() {
                 <div className="device-glow" />
                 <div className="device-frame">
                   <div className="device-notch" />
-                  <img src={selectedScreen.image} alt={`${selectedScreen.eyebrow} preview`} />
+                  <img
+                    src={selectedScreen.image}
+                    alt={`${selectedScreen.eyebrow} preview`}
+                    className="pb-motion"
+                  />
                 </div>
               </button>
               <div className="feature-index">0{activeScreen + 1}<span> / 0{screens.length}</span></div>

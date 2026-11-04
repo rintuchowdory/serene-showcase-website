@@ -2,6 +2,21 @@
 
 Live: **https://rintuchowdory.github.io/serene-showcase-website/** — the showcase site for the Serene meditation app, including an interactive one-minute breathing demo (`client/src/components/BreathWidget.tsx`, 4-4-6-2 cycle with an optional soft chime).
 
+## Motion & scenery
+
+The page moves slowly on purpose. Everything lives in
+[`client/src/components/Scenery.tsx`](client/src/components/Scenery.tsx) plus a block at the end of
+`client/src/index.css`:
+
+| Piece | What it does |
+| --- | --- |
+| `SceneryLandscape` | Hand-drawn SVG landscape between hero and story: dawn sky, three ridges, drifting mist, shimmering lake, floating light motes. Scrolls with a small parallax offset, drawn once and animated in CSS so it stays a few kB. |
+| `KenBurns` / `.pb-motion` | Slow zoom-and-drift on the hero landscape, the device screens and the inspiration cards, so a still picture still breathes. |
+| `Reveal` | Fades copy in once, when it scrolls into view (framer-motion, `once: true`). |
+
+All three respect `prefers-reduced-motion`: with that setting the scenery is frozen and the images
+stop drifting. No extra dependency was added — framer-motion was already in the stack.
+
 ---
 
 # Web App Template (Static Frontend)
